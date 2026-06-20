@@ -1,0 +1,99 @@
+{
+    "request_from": "/api/courses/1",
+    "data": {
+        "id": 1,
+        "teacher_id": 2,
+        "category_id": 1,
+        "title": "Frontend hiện đại hoàn chỉnh với Vue 3 & Figma",
+        "description": "Khóa học toàn diện giúp bạn làm chủ Vue 3 và Composition API, kết hợp thiết kế giao diện với Figma để tạo ra các ứng dụng web thực tế, mượt mà và chuẩn UI/UX.",
+        "what_will_you_learn": "[\"Làm chủ Vue 3 Composition API\", \"Thiết kế UI/UX cơ bản với Figma\", \"Xây dựng ứng dụng SPA thực tế\", \"Quản lý state với Pinia\"]",
+        "thumbnail_url": "https://blog.haposoft.com/content/images/2021/12/Logo-Vuejs.png",
+        "level": "Cơ bản",
+        "course_type": "recorded",
+        "is_free": false,
+        "original_price": 770000,
+        "current_price": 599000,
+        "avg_rating": 4.8,
+        "review_count": 500,
+        "student_count": 840,
+        "total_lesson": 60,
+        "total_duration": 120,
+        "status": "published",
+        "created_at": "2026-06-19T13:56:07+07:00",
+        "tags": [
+            {
+                "id": 8,
+                "name": "CSS"
+            },
+            {
+                "id": 7,
+                "name": "Figma"
+            },
+            {
+                "id": 1,
+                "name": "Vue.js"
+            }
+        ],
+        "teacher": {
+            "id": 2,
+            "role_id": 2,
+            "email": "caodangkhoa.dev@gmail.com",
+            "full_name": "Cao Đăng Khoa",
+            "avatar_url": "https://static.vecteezy.com/system/resources/previews/044/275/556/non_2x/cute-illustration-of-chicken-cartoon-chicken-free-vector.jpg",
+            "phone": "0388375154",
+            "status": "active",
+            "created_at": "2026-06-19T13:56:07+07:00",
+            "profile": null,
+            "streak": null
+        },
+        "category": {
+            "id": 1,
+            "name": "Lập trình Frontend",
+            "slug": "lap-trinh-frontend"
+        },
+        "chapters": [
+            {
+                "id": 1,
+                "course_id": 1,
+                "title": "Chương 1: Tổng quan về kiến trúc",
+                "order_index": 1,
+                "lessons": [
+                    {
+                        "id": 1,
+                        "chapter_id": 1,
+                        "title": "Bài 1: Giới thiệu khóa học",
+                        "video_url": "https://storage.com/video1.mp4",
+                        "duration_seconds": 765,
+                        "order_index": 1
+                    },
+                    {
+                        "id": 2,
+                        "chapter_id": 1,
+                        "title": "Bài 2: Cài đặt môi trường",
+                        "video_url": "https://storage.com/video2.mp4",
+                        "duration_seconds": 540,
+                        "order_index": 2
+                    }
+                ]
+            },
+            {
+                "id": 2,
+                "course_id": 1,
+                "title": "Chương 2: Phân tích UI/UX",
+                "order_index": 2,
+                "lessons": [
+                    {
+                        "id": 3,
+                        "chapter_id": 2,
+                        "title": "Bài 3: Kết nối API với Component",
+                        "video_url": "https://storage.com/video3.mp4",
+                        "duration_seconds": 800,
+                        "order_index": 1
+                    }
+                ]
+            }
+        ]
+    },
+    "message": "Thành công",
+    "status": "success"
+}

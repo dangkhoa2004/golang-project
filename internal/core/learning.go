@@ -4,30 +4,33 @@ import "time"
 
 // Bảng enrollments
 type Enrollment struct {
-	ID              uint      `gorm:"primaryKey;autoIncrement" json:"id"`
-	StudentID       uint      `gorm:"not null" json:"student_id"`
-	CourseID        uint      `gorm:"not null" json:"course_id"`
+	ID              uint      `gorm:"primaryKey;autoIncrement" json:"-"`
+	StudentID       uint      `gorm:"not null" json:"-"`
+	CourseID        uint      `gorm:"not null" json:"-"`
 	ProgressPercent int       `gorm:"default:0" json:"progress_percent"`
 	Status          string    `gorm:"type:varchar(50);default:'learning'" json:"status"`
 	EnrolledAt      time.Time `gorm:"default:current_timestamp" json:"enrolled_at"`
+
+	// Preload Course để dễ dàng hiển thị danh sách khóa học của tôi
+	Course *Course `gorm:"foreignKey:CourseID" json:"course,omitempty"`
 }
 
 // Bảng lesson_progress
 type LessonProgress struct {
-	ID                uint      `gorm:"primaryKey;autoIncrement" json:"id"`
-	EnrollmentID      uint      `gorm:"not null" json:"enrollment_id"`
-	LessonID          uint      `gorm:"not null" json:"lesson_id"`
+	ID                uint      `gorm:"primaryKey;autoIncrement" json:"-"`
+	EnrollmentID      uint      `gorm:"not null" json:"-"`
+	LessonID          uint      `gorm:"not null" json:"-"`
 	IsCompleted       bool      `gorm:"type:tinyint(1);default:0" json:"is_completed"`
 	LastWatchedSecond int       `gorm:"default:0" json:"last_watched_second"`
 	UpdatedAt         time.Time `gorm:"default:current_timestamp" json:"updated_at"`
 }
 
-// Bảng discussions
+// Bảng discussions (Q&A)
 type Discussion struct {
-	ID             uint      `gorm:"primaryKey;autoIncrement" json:"id"`
-	LessonID       uint      `gorm:"not null" json:"lesson_id"`
-	UserID         uint      `gorm:"not null" json:"user_id"`
-	ParentID       *uint     `json:"parent_id"` // Dùng con trỏ đại diện cho khóa ngoại đệ quy có thể NULL
+	ID             uint      `gorm:"primaryKey;autoIncrement" json:"-"`
+	LessonID       uint      `gorm:"not null" json:"-"`
+	UserID         uint      `gorm:"not null" json:"-"`
+	ParentID       *uint     `json:"-"`
 	Content        string    `gorm:"type:text;not null" json:"content"`
 	VideoTimestamp int       `json:"video_timestamp"`
 	CreatedAt      time.Time `gorm:"default:current_timestamp" json:"created_at"`
@@ -35,9 +38,9 @@ type Discussion struct {
 
 // Bảng user_notes
 type UserNote struct {
-	ID             uint      `gorm:"primaryKey;autoIncrement" json:"id"`
-	LessonID       uint      `gorm:"not null" json:"lesson_id"`
-	UserID         uint      `gorm:"not null" json:"user_id"`
+	ID             uint      `gorm:"primaryKey;autoIncrement" json:"-"`
+	LessonID       uint      `gorm:"not null" json:"-"`
+	UserID         uint      `gorm:"not null" json:"-"`
 	Content        string    `gorm:"type:text;not null" json:"content"`
 	VideoTimestamp int       `json:"video_timestamp"`
 	CreatedAt      time.Time `gorm:"default:current_timestamp" json:"created_at"`
@@ -45,9 +48,9 @@ type UserNote struct {
 
 // Bảng certificates
 type Certificate struct {
-	ID             uint      `gorm:"primaryKey;autoIncrement" json:"id"`
-	UserID         uint      `gorm:"not null" json:"user_id"`
-	CourseID       uint      `gorm:"not null" json:"course_id"`
+	ID             uint      `gorm:"primaryKey;autoIncrement" json:"-"`
+	UserID         uint      `gorm:"not null" json:"-"`
+	CourseID       uint      `gorm:"not null" json:"-"`
 	CertificateURL string    `gorm:"type:varchar(255)" json:"certificate_url"`
 	IssuedAt       time.Time `gorm:"default:current_timestamp" json:"issued_at"`
 }

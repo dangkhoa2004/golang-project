@@ -7,29 +7,50 @@ import (
 )
 
 type LearningService interface {
-	EnrollStudent(studentID uint, courseID uint) error
+	GetMyCourses(studentID uint) ([]core.Enrollment, error)
+	GetLessonSecureContent(studentID, courseID, lessonID uint) (interface{}, error) // Đổi kiểu trả về tạm thời
+	TrackVideoProgress(studentID, courseID, lessonID uint, watchedSeconds int) error
+	MarkLessonComplete(studentID, courseID, lessonID uint) error
 }
 
 type learningService struct {
 	learningRepo repository.LearningRepository
+	courseRepo   repository.CourseRepository
 }
 
-func NewLearningService(repo repository.LearningRepository) LearningService {
-	return &learningService{learningRepo: repo}
+func NewLearningService(lr repository.LearningRepository, cr repository.CourseRepository) LearningService {
+	return &learningService{learningRepo: lr, courseRepo: cr}
 }
 
-func (s *learningService) EnrollStudent(studentID uint, courseID uint) error {
-	// Thực tế bạn sẽ cần kiểm tra xem sinh viên đã enroll chưa để tránh lỗi trùng lặp
-	enrollment := &core.Enrollment{
-		StudentID:       studentID,
-		CourseID:        courseID,
-		ProgressPercent: 0,
-		Status:          "learning",
-	}
+func (s *learningService) GetMyCourses(studentID uint) ([]core.Enrollment, error) {
+	return s.learningRepo.GetMyCourses(studentID)
+}
 
-	err := s.learningRepo.CreateEnrollment(enrollment)
-	if err != nil {
-		return errors.New("không thể cấp quyền học khóa học này")
+func (s *learningService) GetLessonSecureContent(studentID, courseID, lessonID uint) (interface{}, error) {
+	hasAccess := s.learningRepo.CheckEnrollment(studentID, courseID)
+	if !hasAccess {
+		return nil, errors.New("bạn chưa mua khóa học này, vui lòng thanh toán để xem")
 	}
-	return nil
+	// TODO: Tạo hàm GetLessonByID trong courseRepo để trả về Video URL
+	return nil, nil
+}
+
+func (s *learningService) TrackVideoProgress(studentID, courseID, lessonID uint, watchedSeconds int) error {
+	// Giả lập lấy EnrollmentID (bạn cần thêm GetEnrollmentByStudentAndCourse vào LearningRepo sau này)
+	// Tạm thời bỏ qua bước check EnrollmentID chi tiết để code build thành công
+	progress := &core.LessonProgress{
+		EnrollmentID:      1, // Cần thay bằng ID thật
+		LessonID:          lessonID,
+		LastWatchedSecond: watchedSeconds,
+	}
+	return s.learningRepo.UpsertProgress(progress)
+}
+
+func (s *learningService) MarkLessonComplete(studentID, courseID, lessonID uint) error {
+	progress := &core.LessonProgress{
+		EnrollmentID: 1, // Cần thay bằng ID thật
+		LessonID:     lessonID,
+		IsCompleted:  true,
+	}
+	return s.learningRepo.UpsertProgress(progress)
 }
