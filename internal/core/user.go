@@ -20,6 +20,7 @@ type User struct {
 	Status       string    `gorm:"type:varchar(20)" json:"status"`
 	CreatedAt    time.Time `gorm:"default:current_timestamp" json:"created_at"`
 
+	Role    *Role        `gorm:"foreignKey:RoleID" json:"role,omitempty"`
 	Profile *UserProfile `gorm:"foreignKey:UserID" json:"profile,omitempty"`
 	Streak  *UserStreak  `gorm:"foreignKey:UserID" json:"streak,omitempty"`
 }

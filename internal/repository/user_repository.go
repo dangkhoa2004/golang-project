@@ -50,7 +50,7 @@ func (r *userRepository) UpdateProfile(profile *core.UserProfile) error {
 
 func (r *userRepository) FindProfileWithDetails(id uint) (*core.User, error) {
 	var user core.User
-	err := r.db.Preload("Profile").Preload("Streak").Where("id = ?", id).First(&user).Error
+	err := r.db.Preload("Role").Preload("Profile").Preload("Streak").Where("id = ?", id).First(&user).Error
 	if err != nil {
 		return nil, err
 	}
